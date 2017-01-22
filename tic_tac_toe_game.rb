@@ -38,25 +38,46 @@ class TicTacToeGame
 
       break if input_value == 'end'
 
-      position = input_value.split(' ')
+      user_plays(input_value)
 
-      @tic_tac_toe_board.set_value(1, position[0].to_i, position[1].to_i)
-      print_tit_tac_toe_board
+      computer_plays
 
-      break if tic_tac_toe_winner
+      break if has_tic_tac_toe_winner?
     end
   end
 
-  def tic_tac_toe_winner
+  def user_plays(input_value)
+    position = input_value.split(' ')
+    @tic_tac_toe_board.set_value(1, position[0].to_i, position[1].to_i)
+    print_tit_tac_toe_board
+  end
+
+  def computer_plays
+    options = @tic_tac_toe_board.positions_in_blank
+    selected_value = options.sample
+    if selected_value
+      @tic_tac_toe_board.set_value(2, selected_value[0], selected_value[1])
+    end
+    print_tit_tac_toe_board
+  end
+
+  def has_tic_tac_toe_winner?
     winner = check_for_winner
 
     if winner == 1
       puts 'You won!!! Congratulations!!!'.blue
     elsif winner == 2
-      puts "Computer won!!! Don't worry, you would never win!!!".red
+      puts "Computer won!!!".red
+    elsif @tic_tac_toe_board.positions_in_blank.length == 0
+      puts "Tic Tac Toe!!!".green
+      return 1
     end
 
     return winner
+  end
+
+  def method_name
+
   end
 
   def check_for_winner

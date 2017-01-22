@@ -31,6 +31,18 @@ class TicTacToeBoard
     @board[line_value][column_value] = value
   end
 
+  def positions_in_blank
+    blank_positions = []
+
+    @board.each_with_index do |line, l|
+      line.each_with_index do |column, c|
+        blank_positions << [l, c] if @board[l][c] == 0
+      end
+    end
+
+    blank_positions
+  end
+
   private
 
   def show_value(numerical_value)
